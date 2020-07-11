@@ -216,10 +216,11 @@ const HN2_Rou=function( req , res ){ "use strict"
 
 const HN1_Mai=function(){ "use strict"
 
-    cli = new pg.Client(
+    obj_cin={
         /**/connectionString:D_U
         ,   ssl:{rejectUnauthorized:false}
-    );;Object.seal( 
+    };;
+    cli = new pg.Client( obj_cin );
     
 
     http.createServer( HN2_Rou ).listen(POR);
