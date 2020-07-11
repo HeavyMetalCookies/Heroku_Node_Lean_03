@@ -59,7 +59,7 @@ const HN3_Run_Fas
 
                     //:Successful execution of query
 
-                    ror_boo=(    1    );
+                    ror_boo=(  1  );
                     ror_dat=( cof );
 
                 })
@@ -120,11 +120,15 @@ const HN2_SQL_Get_Tes =function( rar_daw ){ "use strict"
     HN3_Run_Fas( rar, daw[0] /* src_pat */ )
     .then(( cof )=>{
 
-        rar[1].end();
+        rar[1].write("[HN3_S01]");
 
     }).catch((obj_err)=>{
 
-        rar[1].end( "[HN2_E01]:" + obj_err.toString() );
+        rar[1].write( "[HN2_E01]:" + obj_err.toString() );
+
+    }).finally(()=>{
+
+        rar[1].end();
 
     });;
 
@@ -233,7 +237,8 @@ HN1_Mai();
            HN3_E01: HerokuNode(lean)03: Error #1
            HN3_E02: HerokuNode(lean)03: Error #2
            HN3_E03: HerokuNode(lean)03: Error #3
-           HN3_E04: HerokuNode(lean)04: Error #4
+           HN3_E04: HerokuNode(lean)03: Error #4
+           HN3_S01: HerokuNode(lean)03: Success #1
                pgc: PostGres_Client, just use [ cli ]
                cli: Client object. Probably PostGres PG client.
                  ": Double quote character. Same as single:'
