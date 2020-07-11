@@ -3,22 +3,31 @@
 //:     HN2: Serve File as text, promises, routing refactor.
 //:     HN3: Add SQL, Create table , put-&-get records.
 
-var PORT = process.env.PORT || 5190 ;
-var http = require('http');
-var   fs = require('fs'  );
+//:IMPORTS:
+
+    const  D_U = process.env.DATABASE_URL ;          
+    const  POR = process.env.PORT || 5190 ;
+    const http = require('http');
+    const   fs = require('fs'  );
+    const   pg = require('pg'  );
+
+//:FILE_SCOPE_VARIABLES:
+
+    var cli = null; //:pg.Client instance.
+    
 
 const HN2_Get_Fas =function( src_pat ){
 
     const hn2_executor=( njs_resolver , njs_rejector )=>{
 
-        fs.readFile( src_pat,function(obj_err,dat_fil ){
+        fs.readFile( src_pat,function(obj_err, cof ){
             if( obj_err ){
 
                 njs_rejector( obj_err );
 
             }else{
 
-                njs_resolver( dat_fil );
+                njs_resolver( cof );
 
             };;
         });;
@@ -28,22 +37,96 @@ const HN2_Get_Fas =function( src_pat ){
     return( pro );
 };;
 
+
+
+const HN3_Run_Fas 
+=function( 
+    rar
+,   src_pat 
+){
+    const hn3_executor=( njs_resolver , njs_rejector )=>{
+
+        var ror_boo =( 0 ); //:1:Resolve, 2:Reject
+        var ror_dat = null; //:ResolveOrRejectData
+
+        HN2_Get_Fas( src_pat ).then(( cof )=>{
+
+            cli.connect()
+            .then(()=>{
+
+                cli.query( cof )
+                .then(()=>{
+
+                    //:Successful execution of query
+
+                    ror_boo=(    1    );
+                    ror_dat=( cof );
+
+                })
+                .catch((err)=>{
+
+                    ror_boo=(  2  );
+                    ror_dat=( err );
+                    rar[1].write( "[HN3_E03]:"+err.toString );
+
+                });;
+
+            }).catch((err)=>{
+
+                ror_boo=(  2  );
+                ror_dat=( err );
+                rar[1].write( "[HN3_E01]:"+err.toString );
+
+            }).finally(()=>{
+
+                //:ALWAYS_CLOSE_CONNECTION_REGARDLESS
+                //:OF_IF_THERE_WAS_AN_ERROR_OR_NOT!!!
+                cli.end();
+                
+            });;
+
+        }).catch((obj_err)=>{
+
+            ror_boo=(  2  );
+            ror_dat=( err );
+            rar[1].write( "[HN3_E02]:"+err.toString );
+
+        }).finally(()=>{
+
+            if( 1 == ror_boo ){
+                njs_resolver( ror_dat );
+            }else
+            if( 2 == ror_boo ){
+                njs_rejector( ror_dat );
+            }else{
+                //:This section should never execute.
+                //:Indicates a programmer logic error.
+                njs_rejector("[HN3_E04]");
+            };;
+
+        });;
+     
+    };;
+    var pro=( new Promise( hn3_executor ) );
+    return( pro );
+};;
+
 const HN2_SQL_Get_Tes =function( rar_daw ){ "use strict"
 
     //: rar daw = raw_daw[0|1]
     var rar     = rar_daw[ 0 ];
     var     daw = rar_daw[ 1 ];
 
-    HN2_Get_Fas( daw[0] /* src_pat */ )
-        .then((dat_fil)=>{
-        
-            rar[1].end( dat_fil );
-        
-        }).catch((obj_err)=>{
-        
-            rar[1].end( "[UH_OH]:" + obj_err.toString() );
-        
-        });;
+    HN3_Run_Fas( rar, daw[0] /* src_pat */ )
+    .then(( cof )=>{
+
+        rar[1].end();
+
+    }).catch((obj_err)=>{
+
+        rar[1].end( "[HN2_E01]:" + obj_err.toString() );
+
+    });;
 
 };;
 
@@ -52,7 +135,7 @@ const HN1_Ser_Fil =function( rar_daw ){ "use strict"
     var rar=rar_daw[ 0 ];
     var daw=rar_daw[ 1 ];
     
-    fs.readFile( daw[0],function(obj_err,dat_fil){
+    fs.readFile( daw[0],function(obj_err, cof ){
 
         if(obj_err){
 
@@ -61,7 +144,7 @@ const HN1_Ser_Fil =function( rar_daw ){ "use strict"
         }else{
 
             rar[1].writeHead(200,{ "Content-Type": daw[1] });
-            rar[1].end( dat_fil , "utf-8" );
+            rar[1].end( cof , "utf-8" );
 
         };;
     });;
@@ -133,13 +216,25 @@ const HN2_Rou=function( req , res ){ "use strict"
 
 const HN1_Mai=function(){ "use strict"
 
-    http.createServer( HN2_Rou ).listen(PORT);
+    cli = new pg.Client(
+        /**/connectionString:D_U
+        ,   ssl:{rejectUnauthorized:false}
+    );;Object.seal( 
+    
+
+    http.createServer( HN2_Rou ).listen(POR);
 
 };;
 HN1_Mai();
 
 /**-*********************************************************-**
 
+           HN3_E01: HerokuNode(lean)03: Error #1
+           HN3_E02: HerokuNode(lean)03: Error #2
+           HN3_E03: HerokuNode(lean)03: Error #3
+           HN3_E04: HerokuNode(lean)04: Error #4
+               pgc: PostGres_Client, just use [ cli ]
+               cli: Client object. Probably PostGres PG client.
                  ": Double quote character. Same as single:'
                  ': Single quote character. Same as double:"
                  +: [ addition | string concat | english:And ]
@@ -189,6 +284,7 @@ HN1_Mai();
               Html: A stupid way to write "HTML"
               PORT: PORT number server application listens on
               PORT: defined if deployed on Heroku or Azure
+               POR: Shorthand. SEE[ PORT ]
               else: Denotes alternative block of code.
               func: NOT a keyword. Function pointer variable.
               http: http package that comes with Node.js
@@ -214,7 +310,8 @@ HN1_Mai();
            Minimal: No extranious moving parts.
            Promise: Promise class built into NodeJS
            charset: Denote character encoding of file. 
-           dat_fil: Data of type "file" AKA: File data.
+           dat_fil: DEPRECATED_USE[ cof ](cof:ContentsOfFile)
+               cof: ContentsOf_ile (file_path ==> file_contents)
            example: Show you how it is done
            jum_dic: JUMp_DICtionary (Like a jumptable)
            not_nil: Denote object is not [nil/null]
