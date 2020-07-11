@@ -13,8 +13,8 @@
 
 //:FILE_SCOPE_VARIABLES:
 
-    var cli = null; //:pg.Client instance.
-    
+    var     cli = null; //:pg.Client instance.
+    var obj_cin = null; //:pg connection information object
 
 const HN2_Get_Fas =function( src_pat ){
 
