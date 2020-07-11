@@ -51,8 +51,12 @@ const HN3_Run_Fas
 
         HN2_Get_Fas( src_pat ).then(( cof )=>{
 
+            ror_boo=( 0-2 );
+
             cli.connect()
             .then(()=>{
+
+                ror_boo=( 0-1 );
 
                 cli.query( cof )
                 .then(()=>{
@@ -101,7 +105,7 @@ const HN3_Run_Fas
             }else{
                 //:This section should never execute.
                 //:Indicates a programmer logic error.
-                njs_rejector("[HN3_E04]");
+                njs_rejector("[[HN3_E04]:ror_boo]:"+ror_boo)
             };;
 
         });;
