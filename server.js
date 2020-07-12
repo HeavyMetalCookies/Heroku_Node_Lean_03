@@ -54,7 +54,7 @@ const HN3_Run_cof
         await cli.connect();
         await cli.query("BEGIN" );
 
-        dar =( await cli.query( cof ) );
+        dar =await( cli.query( cof ) );
 
         await cli.query("COMMIT");
         
@@ -66,7 +66,8 @@ const HN3_Run_cof
 
     }finally{
 
-        cli.end(); //:Does not need await I think.
+        //:Do NOT await here. Will hang server.
+        cli.end(); 
 
     };;
 
