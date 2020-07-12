@@ -45,7 +45,7 @@ const HN3_Run_cof
 ){
     if( !rar ){throw("[HN3_E06]"); };
 
-    
+    var err="[HN3_E01:NOT_SET]";
     var dar=null; //:DatabasE_Response
     var pas=( 0 );
     try{
@@ -57,10 +57,13 @@ const HN3_Run_cof
         await cli.query("COMMIT");
         
         pas=( 0+1 );
-    }catch(err){
+    }catch( hn3_e01 ){
+
         //:Fill out error message string:
-        //:rar[2]=( "([HN3_E05]"+err.toString()+")" );
-        
+        rar[1].write=( 
+            "([HN3_E01]"+hn3_e01.toString()+")" 
+        );;
+        err=( hn3_e01 );
         pas=( 0-1 );
 
     }finally{
