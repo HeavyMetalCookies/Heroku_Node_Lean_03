@@ -38,6 +38,35 @@ const HN2_Get_Fas =function( src_pat ){
 };;
 
 
+const async HN3_Run_cof
+=function(
+    rar
+,   cof
+){
+    if( !rar ){throw("[HN3_E06]"); };
+
+    var pas=( 0 );
+    try{
+        await cli.connect();
+        await cli.query("BEGIN" );
+        await cli.query(  cof   );
+        await cli.query("COMMIT");
+        
+        pas=( 1 );
+    }catch(err){
+        //:Fill out error message string:
+        rar[2]=( "([HN3_E05]"+err.toString()+")" );
+        pas=(0-1);
+
+    }finally{
+
+        await cli.end();
+
+    };;
+
+    if( pas > 0 ){         return( rar ); }   //:Resolve
+    return(        Promise.reject( rar )  );; //:Reject
+};;
 
 const HN3_Run_Fas 
 =function( 
@@ -51,29 +80,29 @@ const HN3_Run_Fas
 
         HN2_Get_Fas( src_pat ).then(( cof )=>{
 
-            ror_boo=( 0-2 );
+                ror_boo=( 0-2 );
 
-            cli.connect()
-            .then(()=>{
+                return( //:RETURN ANOTHE PROMISE, DO NOT
+                        //:BREAK THE PROMISE CHAIN!
 
-                ror_boo=( 0-1 );
+                    HN3_Run_cof( rar, cof )
+                   .then(()=>{
 
-                cli.query( cof )
-                .then(()=>{
+                        //:Successful execution of query
 
-                    //:Successful execution of query
+                        ror_boo=(  1  );
+                        ror_dat=( cof );
 
-                    ror_boo=(  1  );
-                    ror_dat=( cof );
+                    }).catch((err)=>{
 
-                })
-                .catch((err)=>{
+                        ror_boo=(  2  );
+                        ror_dat=( err );
+                        rar[1].write( 
+                            "[HN3_E03]:"+err.toString 
+                        );;
 
-                    ror_boo=(  2  );
-                    ror_dat=( err );
-                    rar[1].write( "[HN3_E03]:"+err.toString );
-
-                });;
+                    })
+                );;
 
             }).catch((err)=>{
 
@@ -242,6 +271,8 @@ HN1_Mai();
            HN3_E02: HerokuNode(lean)03: Error #2
            HN3_E03: HerokuNode(lean)03: Error #3
            HN3_E04: HerokuNode(lean)03: Error #4
+           HN3_E05: HerokuNode(lean)03: Error #5
+           HN3_E06: HerokuNode(lean)03: Error #6
            HN3_S01: HerokuNode(lean)03: Success #1
                pgc: PostGres_Client, just use [ cli ]
                cli: Client object. Probably PostGres PG client.
