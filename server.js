@@ -43,7 +43,9 @@ const HN3_Run_cof
     rar
 ,   cof
 ){
-    if( !rar ){throw("[HN3_E06]"); };
+    if( !rar    ){throw("[HN3_E06.A]"); };
+    if( !rar[0] ){throw("[HN3_E06.B]"); };
+    if( !rar[1] ){throw("[HN3_E06.C]"); };
 
     var err="[HN3_E01:NOT_SET]";
     var dar=null; //:DatabasE_Response
