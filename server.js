@@ -78,45 +78,32 @@ const HN3_Run_Fas
         var ror_boo =( 0 ); //:1:Resolve, 2:Reject
         var ror_dat = null; //:ResolveOrRejectData
 
-        HN2_Get_Fas( src_pat ).then(( cof )=>{
+        HN2_Get_Fas( src_pat )
+       .then(( cof )=>{
 
-                ror_boo=( 0-2 );
-
-                return( //:RETURN ANOTHE PROMISE, DO NOT
-                        //:BREAK THE PROMISE CHAIN!
-
-                    HN3_Run_cof( rar, cof )
-                   .then(()=>{
-
-                        //:Successful execution of query
-
-                        ror_boo=(  1  );
-                        ror_dat=( cof );
-
-                    }).catch((err)=>{
-
-                        ror_boo=(  2  );
-                        ror_dat=( err );
-                        rar[1].write( 
-                            "[HN3_E03]:"+err.toString 
-                        );;
-
-                    })
-                );;
-
-            }).catch((err)=>{
-
-                ror_boo=(  2  );
-                ror_dat=( err );
-                rar[1].write( "[HN3_E01]:"+err.toString );
-
-            }).finally(()=>{
-
-                //:ALWAYS_CLOSE_CONNECTION_REGARDLESS
-                //:OF_IF_THERE_WAS_AN_ERROR_OR_NOT!!!
-                cli.end();
-                
-            });;
+            ror_boo=( 0-2 );
+            
+            return( //:RETURN ANOTHE PROMISE, DO NOT
+                    //:BREAK THE PROMISE CHAIN!
+            
+                HN3_Run_cof( rar, cof )
+            .then(()=>{
+            
+                    //:Successful execution of query
+            
+                    ror_boo=(  1  );
+                    ror_dat=( cof );
+            
+                }).catch((err)=>{
+            
+                    ror_boo=(  2  );
+                    ror_dat=( err );
+                    rar[1].write( 
+                        "[HN3_E03]:"+err.toString 
+                    );;
+            
+                })
+            );;
 
         }).catch((obj_err)=>{
 
