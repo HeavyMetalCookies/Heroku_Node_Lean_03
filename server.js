@@ -57,13 +57,9 @@ const HN3_Run_cof
         await cli.query("COMMIT");
         
         pas=( 0+1 );
-    }catch( hn3_e01 ){
+    }catch( inn_err ){
 
-        //:Fill out error message string:
-        rar[1].write=( 
-            "([HN3_E01]"+hn3_e01.toString()+")" 
-        );;
-        err=( hn3_e01 );
+        err=( inn_err );
         pas=( 0-1 );
 
     }finally{
