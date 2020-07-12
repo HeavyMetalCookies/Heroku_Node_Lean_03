@@ -47,10 +47,14 @@ const HN3_Run_cof
     if( !rar[0] ){throw("[HN3_E06.B]"); };
     if( !rar[1] ){throw("[HN3_E06.C]"); };
 
+    var cli=null;
     var err="[HN3_E01:NOT_SET]";
     var dar=null; //:DatabasE_Response
     var pas=( 0 );
     try{
+
+        cli = new pg.Client( obj_cin );
+
         await cli.connect();
         await cli.query("BEGIN" );
 
@@ -61,7 +65,7 @@ const HN3_Run_cof
         pas=( 0+1 );
     }catch( inn_err ){
 
-        err=( inn_err );
+        err=( "[HN3_E01]:" + inn_err.toString() );
         pas=( 0-1 );
 
     }finally{
@@ -255,8 +259,6 @@ const HN1_Mai=function(){ "use strict"
         /**/connectionString:D_U
         ,   ssl:{rejectUnauthorized:false}
     };;
-    cli = new pg.Client( obj_cin );
-    
 
     http.createServer( HN2_Rou ).listen(POR);
 
