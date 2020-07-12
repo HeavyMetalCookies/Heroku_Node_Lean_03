@@ -38,8 +38,8 @@ const HN2_Get_Fas =function( src_pat ){
 };;
 
 
-const async HN3_Run_cof
-=function(
+const HN3_Run_cof
+=async function(
     rar
 ,   cof
 ){
