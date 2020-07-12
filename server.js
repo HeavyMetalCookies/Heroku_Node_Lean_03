@@ -45,18 +45,27 @@ const HN3_Run_cof
 ){
     if( !rar ){throw("[HN3_E06]"); };
 
+    
+    var dar=null; //:DatabasE_Response
     var pas=( 0 );
     try{
         await cli.connect();
         await cli.query("BEGIN" );
-        await cli.query(  cof   );
+
+        await 
+            cli.query( cof )
+           .then ( (inn_dar)=>{  dar=( inn_dar ); } )
+           .catch( (inn_err)=>{ throw( inn_err ); } )
+        ;;
+
         await cli.query("COMMIT");
         
-        pas=( 1 );
+        pas=( 0+1 );
     }catch(err){
         //:Fill out error message string:
-        rar[2]=( "([HN3_E05]"+err.toString()+")" );
-        pas=(0-1);
+        //:rar[2]=( "([HN3_E05]"+err.toString()+")" );
+        
+        pas=( 0-1 );
 
     }finally{
 
@@ -64,8 +73,8 @@ const HN3_Run_cof
 
     };;
 
-    if( pas > 0 ){         return( rar ); }   //:Resolve
-    return(        Promise.reject( rar )  );; //:Reject
+    if( pas > 0 ){         return( dar ); }   //:Resolve
+    return(        Promise.reject( err )  );; //:Reject
 };;
 
 const HN3_Run_Fas 
