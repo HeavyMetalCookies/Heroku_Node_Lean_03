@@ -106,7 +106,7 @@ const HN3_Run_Fas
                     ror_boo=(  2  );
                     ror_dat=( err );
                     rar[1].write( 
-                        "[HN3_E03]:"+err.toString 
+                        "(" + "[HN3_E03]:"+err.toString() +")"
                     );;
             
                 })
