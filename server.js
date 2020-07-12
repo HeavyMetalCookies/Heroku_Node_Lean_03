@@ -52,10 +52,7 @@ const HN3_Run_cof
         await cli.connect();
         await cli.query("BEGIN" );
 
-        await 
-            cli.query( cof )
-           .then ( (inn_dar)=>{  dar=( inn_dar ); } )
-        ;;
+        dar =( await cli.query( cof ) );
 
         await cli.query("COMMIT");
         
