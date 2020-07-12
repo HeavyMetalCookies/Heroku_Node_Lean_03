@@ -66,7 +66,7 @@ const HN3_Run_cof
 
     }finally{
 
-        await cli.end();
+        cli.end(); //:Does not need await I think.
 
     };;
 
