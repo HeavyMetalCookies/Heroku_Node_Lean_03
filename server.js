@@ -55,7 +55,6 @@ const HN3_Run_cof
         await 
             cli.query( cof )
            .then ( (inn_dar)=>{  dar=( inn_dar ); } )
-           .catch( (inn_err)=>{ throw( inn_err ); } )
         ;;
 
         await cli.query("COMMIT");
@@ -92,11 +91,13 @@ const HN3_Run_Fas
 
             ror_boo=( 0-2 );
             
-            return( //:RETURN ANOTHE PROMISE, DO NOT
-                    //:BREAK THE PROMISE CHAIN!
+            //:RETURN ANOTHE PROMISE, DO NOT   //:///////////://
+            //:BREAK THE PROMISE CHAIN!        //:///////////://    
+            return( //://////////////////////////////////////://
+                    
             
                 HN3_Run_cof( rar, cof )
-            .then(()=>{
+                .then(()=>{
             
                     //:Successful execution of query
             
@@ -112,7 +113,7 @@ const HN3_Run_Fas
                     );;
             
                 })
-            );;
+            );; //://////////////////////////////////////////://
 
         }).catch((obj_err)=>{
 
@@ -153,7 +154,9 @@ const HN2_SQL_Get_Tes =function( rar_daw ){ "use strict"
 
     }).catch((obj_err)=>{
 
-        rar[1].write( "[HN2_E01]:" + obj_err.toString() );
+        rar[1].write( 
+            "(" + "[HN2_E01]:" + obj_err.toString() + ")"
+        );;
 
     }).finally(()=>{
 
