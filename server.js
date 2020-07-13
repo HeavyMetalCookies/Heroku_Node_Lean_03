@@ -56,6 +56,7 @@ const HN3_Run_cof
     if( !rar    ){throw("[HN3_E06.A]"); };
     if( !rar[0] ){throw("[HN3_E06.B]"); };
     if( !rar[1] ){throw("[HN3_E06.C]"); };
+    if( !cof    ){throw("[HN3_E06.D]"); };
 
     var cli=null;
     var err="[HN3_E01:NOT_SET]";
