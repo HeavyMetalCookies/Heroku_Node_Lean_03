@@ -76,7 +76,7 @@ const HN3_Run_cof
     }catch( inn_err ){
 
         err=( ""
-        +   "[HN3:cof]:" + cof
+        +   "[HN3_Run_cof.cof](((" + cof + ")))"
         +   "[HN3_E01]:" + inn_err.toString() 
         );;
         pas=( 0-1 );
