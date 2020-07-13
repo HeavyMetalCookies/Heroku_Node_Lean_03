@@ -1,7 +1,7 @@
 //:HN3: Heroku_Node(lean):03
 //:     HN1: Minimal example to serve Html + Javascript.
 //:     HN2: Serve File as text, promises, routing refactor.
-//:     HN3: Add SQL, Create table , put-&-get records.
+//:     HN3: SQL execution from file on server.
 
 //:FUNCTION_INDEX:
 
