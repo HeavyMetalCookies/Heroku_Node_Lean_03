@@ -3,6 +3,16 @@
 //:     HN2: Serve File as text, promises, routing refactor.
 //:     HN3: Add SQL, Create table , put-&-get records.
 
+//:FUNCTION_INDEX:
+
+    //: HN2_Get_fas      : Get_file_as_string
+    //: HN3_Run_cof      : Run_contents_of_file
+    //: HN3_Run_fas      : Run_file_as_string
+    //: HN2_SQL_Get_Tes  : SQL_Get_Test
+    //: HN1_Ser_Fil      : Serve_File
+    //: HN1_Mai          : MAIn_entry_point
+
+
 //:IMPORTS:
 
     const  D_U = process.env.DATABASE_URL ;          
@@ -16,7 +26,7 @@
     var     cli = null; //:pg.Client instance.
     var obj_cin = null; //:pg connection information object
 
-const HN2_Get_Fas =function( src_pat ){
+const HN2_Get_fas =function( src_pat ){
 
     const hn2_executor=( njs_resolver , njs_rejector )=>{
 
@@ -57,12 +67,11 @@ const HN3_Run_cof
 
         await cli.connect();
         await cli.query("BEGIN" );
-
         dar =await( cli.query( cof ) );
-
         await cli.query("COMMIT");
         
         pas=( 0+1 );
+
     }catch( inn_err ){
 
         err=( "[HN3_E01]:" + inn_err.toString() );
@@ -70,7 +79,7 @@ const HN3_Run_cof
 
     }finally{
 
-        //:Do NOT await here. Will hang server.
+        //:Do_NOT_await_here__Will_hang_server.
         cli.end(); 
 
     };;
@@ -79,7 +88,7 @@ const HN3_Run_cof
     return(        Promise.reject( err )  );; //:Reject
 };;
 
-const HN3_Run_Fas 
+const HN3_Run_fas 
 =function( 
     rar
 ,   src_pat 
@@ -89,7 +98,7 @@ const HN3_Run_Fas
         var ror_boo =( 0 ); //:1:Resolve, 2:Reject
         var ror_dat = null; //:ResolveOrRejectData
 
-        HN2_Get_Fas( src_pat )
+        HN2_Get_fas( src_pat )
        .then(( cof )=>{
 
             ror_boo=( 0-2 );
@@ -150,7 +159,7 @@ const HN2_SQL_Get_Tes =function( rar_daw ){ "use strict"
     var rar     = rar_daw[ 0 ];
     var     daw = rar_daw[ 1 ];
 
-    HN3_Run_Fas( rar, daw[0] /* src_pat */ )
+    HN3_Run_fas( rar, daw[0] /* src_pat */ )
     .then(( cof )=>{
 
         rar[1].write("[HN3_S01]");
@@ -375,7 +384,7 @@ HN1_Mai();
         Javascript: Poorly capitalized "JavaScript"
        "text/html": "Content-Type" for html files
        HN1_Ser_Fil: HN1_Serve_File: Serves a file to client.
-       HN2_Get_Fas: Get FileAsString(fas)
+       HN2_Get_fas: Get FileAsString(fas)
        Heroku_Node: Denotes a project using Heroku & Node.js
       "text/plain": "Content-Type" for plain text, NOT code.
       "use strict": Warnings are errors.
